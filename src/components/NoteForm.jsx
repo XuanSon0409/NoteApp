@@ -12,24 +12,30 @@ function NoteForm({ onAdd }) {
     };
 
     return (
-        <div className="bg-white rounded p-6 mb-8" style={{ fontFamily: 'sans-serif' }}>
+        <div className="bg-white rounded-lg p-6 mb-8"
+            style={{
+                fontFamily: 'sans-serif',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.03)'
+            }}>
             <h2 className="text-lg font-medium text-gray-800 mb-4">Create a new note</h2>
             <div className="space-y-4">
                 <div>
                     <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
                     <input
                         type="text"
-                        className="mt-1 block w-full border border-gray-300 rounded font-normal py-2 px-3 placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-emerald-500 text-gray-700"
+                        id="title"
+                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                         placeholder="Note title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Content</label>
+                    <label htmlFor="content" className="block text-sm font-medium text-gray-700">Content</label>
                     <textarea
+                        id="content"
                         rows="4"
-                        className="mt-1 block w-full border border-gray-300 rounded font-normal py-2 px-3 placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-emerald-500 text-gray-700"
+                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                         placeholder="Write your note here..."
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
