@@ -18,46 +18,43 @@ function App() {
     localStorage.setItem("notes", JSON.stringify(notes));
   }, [notes]);
 
+  // Add new note with trimmed title and content
   const addNote = (note) => {
-    setNotes([note, ...notes]);
+    const trimmedNote = {
+      ...note,
+      title: note.title.trim(),
+      content: note.content.trim(),
+    };
+    setNotes([trimmedNote, ...notes]);
   };
 
+  // Filter notes using trimmed search value
   const filteredNotes = notes.filter((note) =>
-    note.title.toLowerCase().includes(search.toLowerCase())
+    note.title.toLowerCase().includes(search.trim().toLowerCase())
   );
-
-  const deleteNote = (id) => {
-    Modal.confirm({
-      title: "Are you sure you want to delete this note?",
-      content: "This action cannot be undone.",
-      okText: "Delete",
-      okType: "danger",
-      cancelText: "Cancel",
-      onOk() {
-        const filtered = notes.filter((note) => note.id !== id);
-        setNotes(filtered);
-      },
-    });
-  };
-
-  const editNote = (note) => {
-    setTitle(note.title);
-    setContent(note.content);
-    setEditingId(note.id);
-  };
-
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm" style={{ '--tw-shadow': '0 1px 2px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.05))' }}>
+      <header
+        className="bg-white shadow-sm"
+        style={{
+          "--tw-shadow":
+            "0 1px 2px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.05))",
+        }}
+      >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <h1 className="text-2xl font-bold text-gray-800" style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>My Notes</h1>
+          <h1
+            className="text-2xl font-bold text-gray-800"
+            style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
+          >
+            My Notes
+          </h1>
         </div>
       </header>
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="mb-6">
-          <div className="relative" >
+          <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +77,7 @@ function App() {
               className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
               placeholder="Search notes..."
               style={{
-                fontFamily: 'sans-serif',
+                fontFamily: "sans-serif",
               }}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
