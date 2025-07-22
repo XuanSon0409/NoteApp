@@ -5,22 +5,40 @@ function NoteForm({ onAdd }) {
     const [content, setContent] = useState("");
 
     const handleSubmit = () => {
-        if (!title.trim()) return;
-        onAdd({ title, content, id: Date.now() });
+        // Trim both title and content to remove leading/trailing whitespace
+        const trimmedTitle = title.trim();
+        const trimmedContent = content.trim();
+
+        // Prevent adding if the title is empty after trimming
+        if (!trimmedTitle) return;
+
+        // Pass trimmed data to parent
+        onAdd({ title: trimmedTitle, content: trimmedContent, id: Date.now() });
+
+        // Reset input fields
         setTitle("");
         setContent("");
     };
 
     return (
-        <div className="bg-white rounded-lg p-6 mb-8"
+        <div
+            className="bg-white rounded-lg p-6 mb-8"
             style={{
-                fontFamily: 'sans-serif',
-                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.03)'
-            }}>
-            <h2 className="text-lg font-medium text-gray-800 mb-4">Create a new note</h2>
+                fontFamily: "sans-serif",
+                boxShadow: "0 1px 3px rgba(0, 0, 0, 0.03)",
+            }}
+        >
+            <h2 className="text-lg font-medium text-gray-800 mb-4">
+                Create a new note
+            </h2>
             <div className="space-y-4">
                 <div>
-                    <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
+                    <label
+                        htmlFor="title"
+                        className="block text-sm font-medium text-gray-700"
+                    >
+                        Title
+                    </label>
                     <input
                         type="text"
                         id="title"
@@ -31,7 +49,12 @@ function NoteForm({ onAdd }) {
                     />
                 </div>
                 <div>
-                    <label htmlFor="content" className="block text-sm font-medium text-gray-700">Content</label>
+                    <label
+                        htmlFor="content"
+                        className="block text-sm font-medium text-gray-700"
+                    >
+                        Content
+                    </label>
                     <textarea
                         id="content"
                         rows="4"
@@ -63,7 +86,6 @@ function NoteForm({ onAdd }) {
                         </svg>
                         Save Note
                     </button>
-
                 </div>
             </div>
         </div>
