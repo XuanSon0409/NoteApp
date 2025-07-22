@@ -21,12 +21,28 @@ function NoteList({ notes, setNotes }) {
 
 
     const saveEdit = (id) => {
+        const trimmedTitle = editTitle.trim();
+        const trimmedContent = editContent.trim();
+
+        if (!trimmedTitle && !trimmedContent) {
+            Modal.warning({
+                title: "Empty Note",
+                content: "Both title and content cannot be empty.",
+            });
+            return;
+        }
+
         const updatedNotes = notes.map((note) =>
-            note.id === id ? { ...note, title: editTitle, content: editContent } : note
+            note.id === id
+                ? {
+                    ...note,
+                    title: trimmedTitle,
+                    content: trimmedContent,
+                }
+                : note
         );
         setNotes(updatedNotes);
         cancelEdit();
-        setEditingId(null);
     };
 
 
@@ -67,7 +83,7 @@ function NoteList({ notes, setNotes }) {
                             <input
                                 type="text"
                                 value={editTitle}
-                                onChange={(e) => setEditTitle(e.target.value)}
+                                onChange={(e) => setEditTitle(e.target.value.trimStart())}
                                 className="block w-full border border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 rounded-md px-3 py-2 mb-3 text-base"
                                 placeholder="Edit title"
                                 style={{
@@ -76,7 +92,7 @@ function NoteList({ notes, setNotes }) {
                             />
                             <textarea
                                 value={editContent}
-                                onChange={(e) => setEditContent(e.target.value)}
+                                onChange={(e) => setEditContent(e.target.value.trimStart())}
                                 className="block w-full border border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 rounded-md px-3 py-2 mb-3 text-base"
                                 rows={4}
                                 placeholder="Edit content"
