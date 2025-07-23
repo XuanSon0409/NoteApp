@@ -6,17 +6,21 @@ import { Modal } from "antd";
 function App() {
   const [notes, setNotes] = useState([]);
   const [search, setSearch] = useState("");
+  const [isInitialLoad, setIsInitialLoad] = useState(true); 
 
   // Load notes from localStorage
   useEffect(() => {
     const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
     setNotes(savedNotes);
+    setIsInitialLoad(false); //  Mark as loaded
   }, []);
 
-  // Save notes to localStorage
+  // Save notes to localStorage 
   useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes]);
+    if (!isInitialLoad) {
+      localStorage.setItem("notes", JSON.stringify(notes));
+    }
+  }, [notes, isInitialLoad]);
 
   // Add new note with trimmed title and content
   const addNote = (note) => {
